@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,7 +14,7 @@ import AddressForm from './AdressForm';
 import PaymentForm from './PaymentForm';
 import Review from './Review';
 import { UserConsumer } from '../context/context';
-
+import myorderFunction from './addtoMyOrder';
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -68,16 +68,20 @@ const useStyles = makeStyles(theme => ({
 const steps = ['Shipping address', 'Payment details', 'Review your order'];
 
 function getStepContent(step) {
+  console.log("STEP:-",step);
+  
   const data = useContext(UserConsumer)
   console.log(data.bData);
   const bData = data.bData
   switch (step) {
+    
     case 0:
       return <AddressForm />;
     case 1:
       return <PaymentForm />;
     case 2:
-      return <Review bData={bData}/>;
+        
+        return <Review bData={bData} />;
     default:
       throw new Error('Unknown step');
   }
@@ -95,14 +99,20 @@ export default function Checkout() {
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
-
+  useEffect(() => {
+   console.log("activeStep in useEffect ",activeStep);
+   if(activeStep===3){
+    myorderFunction()
+  }
+  
+  }, [activeStep])
   return (
     <React.Fragment>
       <CssBaseline />
       <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
-            Company name
+           Medication
           </Typography>
         </Toolbar>
       </AppBar>

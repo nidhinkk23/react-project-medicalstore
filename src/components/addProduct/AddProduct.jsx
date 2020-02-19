@@ -4,18 +4,18 @@ import CustomizedSnackbars from './SnackBar'
 export default function AddProduct(props) {
 
     let addPdtState = {
-        productName: "",
-        brand: "",
+        pName: "",
+        company: "",
         price: "",
         quantity: "",
-        image: ""
+        pImage: ""
 
     }
     let valPrdctData = {
         valN: false,
         errorN: ""
     }
-    let valBrandData = {
+    let valcompanyData = {
         valB: false,
         errorB: ""
     }
@@ -23,7 +23,7 @@ export default function AddProduct(props) {
         valP: false,
         errorP: ""
     }
-    let valImageData = {
+    let valpImageData = {
         valI: false,
         errorI: ""
     }
@@ -39,10 +39,10 @@ export default function AddProduct(props) {
     const [state, setstate] = useState(addPdtState)
 
     const [valPrdct, setValPrdct] = useState(valPrdctData)
-    const [valBrand, setvalBrand] = useState(valBrandData)
+    const [valcompany, setvalcompany] = useState(valcompanyData)
     const [valPrice, setValPrice] = useState(valPriceData)
     const [valQuantity, setValQuantity] = useState(valQtyData)
-    const [valImage, setValImage] = useState(valImageData)
+    const [valpImage, setValpImage] = useState(valpImageData)
 
     //call at onChange evet
     let handleChange = (event) => {
@@ -55,11 +55,11 @@ export default function AddProduct(props) {
         })
         console.log("state: ", state);
     }
-    const { productName, brand, price, quantity, image } = state
+    const { pName, company, price, quantity, pImage } = state
     //onKeyUp Validation
     let keyUpVal = (event) => {
-        if (event.target.name === 'productName') {
-            if (!productName.trim().match(/^[a-z A-Z]+$/)) {
+        if (event.target.name === 'pName') {
+            if (!pName.trim().match(/^[a-z A-Z]+$/)) {
 
                 setValPrdct(
                     {
@@ -67,7 +67,7 @@ export default function AddProduct(props) {
                         valN: true,
                         errorN: "product name should not be  number "
                     })
-            } else if (productName.trim().length > 20) {
+            } else if (pName.trim().length > 20) {
 
                 setValPrdct(
                     {
@@ -82,21 +82,21 @@ export default function AddProduct(props) {
                 })
             }
         }
-        if (event.target.name === 'brand') {
-            if (!brand.trim().match(/^[a-zA-Z]+$/)) {
-                setvalBrand({
+        if (event.target.name === 'company') {
+            if (!company.trim().match(/^[a-zA-Z]+$/)) {
+                setvalcompany({
                     valB: true,
-                    errorB: "brand name should not be number  "
+                    errorB: "company name should not be number  "
                 })
             }
-            else if (brand.trim().length > 20) {
-                setvalBrand({
+            else if (company.trim().length > 20) {
+                setvalcompany({
                     valB: true,
-                    errorB: "brand name should less than 20 "
+                    errorB: "company name should less than 20 "
                 })
             } else {
-                setvalBrand({
-                    ...valBrand,
+                setvalcompany({
+                    ...valcompany,
                     valB: false
                 })
             }
@@ -128,16 +128,16 @@ export default function AddProduct(props) {
                 })
             }
         }
-        if (event.target.name === 'image') {
-            if (image.trim().length > 30) {
-                setValImage({
+        if (event.target.name === 'pImage') {
+            if (pImage.trim().length > 30) {
+                setValpImage({
 
                     valI: false,
                     errorI: "not more than 30 character "
                 })
             } else {
-                setValImage({
-                    ...valImage,
+                setValpImage({
+                    ...valpImage,
                     valI: false
                 })
             }
@@ -153,11 +153,11 @@ export default function AddProduct(props) {
     let validation = (event) => {
         event.preventDefault()
         
-        if (productName.trim().length < 2 || !productName.trim().match(/^[a-zA-Z]+$/) || brand.trim().length === 0 || price.trim().length === 0 || quantity.trim().length === 0 || image.trim().length < 3) {
+        if (pName.trim().length < 2 || !pName.trim().match(/^[a-zA-Z]+$/) || company.trim().length === 0 || price.trim().length === 0 || quantity.trim().length === 0 || pImage.trim().length < 3) {
             console.log("validation failed");
-            if (!productName.trim().match(/^[a-z A-Z]+$/) || productName.trim().length < 2) {
+            if (!pName.trim().match(/^[a-z A-Z]+$/) || pName.trim().length < 2) {
 
-                if (!productName.trim().match(/^[a-z A-Z]+$/)) {
+                if (!pName.trim().match(/^[a-z A-Z]+$/)) {
 
                     setValPrdct(
                         {
@@ -166,7 +166,7 @@ export default function AddProduct(props) {
                             errorN: "product name should not be  number "
                         })
                 }
-                else if (productName.trim().length < 2 || productName.trim().length > 20) {
+                else if (pName.trim().length < 2 || pName.trim().length > 20) {
                     console.log();
 
                     setValPrdct({
@@ -182,22 +182,22 @@ export default function AddProduct(props) {
                     })
                 }
             }
-            if (brand.trim().length === 0 || !brand.trim().match(/^[a-zA-Z]+$/) || brand.trim().length > 20) {
-                if (brand.trim().length === 0 || brand.trim().length > 20) {
-                    setvalBrand({
+            if (company.trim().length === 0 || !company.trim().match(/^[a-zA-Z]+$/) || company.trim().length > 20) {
+                if (company.trim().length === 0 || company.trim().length > 20) {
+                    setvalcompany({
                         valB: true,
-                        errorB: "brand name should not be empty and less than 20 "
+                        errorB: "company name should not be empty and less than 20 "
                     })
                 }
-                else if (!brand.trim().match(/^[a-zA-Z]+$/)) {
-                    setvalBrand({
+                else if (!company.trim().match(/^[a-zA-Z]+$/)) {
+                    setvalcompany({
                         valB: true,
-                        errorB: "brand name should not be number "
+                        errorB: "company name should not be number "
                     })
                 }
             } else {
-                setvalBrand({
-                    ...valBrand,
+                setvalcompany({
+                    ...valcompany,
                     valB: false
                 })
             }
@@ -240,15 +240,15 @@ export default function AddProduct(props) {
                     valQ: false
                 })
             }
-            if (image.trim().length === 0) {
-                setValImage({
+            if (pImage.trim().length === 0) {
+                setValpImage({
                     valI: true,
-                    errorI: "Please add image url"
+                    errorI: "Please add pImage url"
                 })
 
             } else {
-                setValImage({
-                    ...valImage,
+                setValpImage({
+                    ...valpImage,
                     valI: false
                 })
             }
@@ -272,8 +272,8 @@ export default function AddProduct(props) {
 
         const formData = state
         console.log("formData: ", formData);
-        // const url = "http://localhost:8080/shoppingcart/addproduct"
-        const url = "https://react-shopping-cart-fa82c.firebaseio.com/addproduct.json"
+        const url = "http://localhost:8080/addproduct"
+        // const url = "https://react-shopping-cart-fa82c.firebaseio.com/addproduct.json"
 
         let axiosAddProduct = async () => {
             try {
@@ -319,19 +319,19 @@ export default function AddProduct(props) {
                     <label for="">Product Name:</label>
                     <input type="text"
                         onKeyUp={keyUpVal}
-                        value={state.productName}
+                        value={state.pName}
                         onChange={handleChange}
-                        className="form-control" name="productName" id="" aria-describedby="helpId" placeholder="" />
+                        className="form-control" name="pName" id="" aria-describedby="helpId" placeholder="" />
                     {valPrdct.valN ? <small style={style} id="helpId" className="form-text">{valPrdct.errorN}</small> : null}
                 </div>
                 <div className="form-group">
-                    <label for="">Brand:</label>
+                    <label for="">company:</label>
                     <input type="text"
                         onKeyUp={keyUpVal}
-                        value={state.brand}
+                        value={state.company}
                         onChange={handleChange}
-                        className="form-control" name="brand" id="" aria-describedby="helpId" placeholder="" />
-                    {valBrand.valB ? <small id="helpId" style={style} className="form-text">{valBrand.errorB}</small> : null}
+                        className="form-control" name="company" id="" aria-describedby="helpId" placeholder="" />
+                    {valcompany.valB ? <small id="helpId" style={style} className="form-text">{valcompany.errorB}</small> : null}
 
                 </div>
                 <div class="form-group">
@@ -353,13 +353,13 @@ export default function AddProduct(props) {
                     {valQuantity.valQ ? <small id="helpId" style={style} className="form-text ">{valQuantity.errorQ}</small> : null}
                 </div>
                 <div className="form-group">
-                    <label for="">Image url:</label>
+                    <label for="">pImage url:</label>
                     <input type="text"
                         onKeyUp={keyUpVal}
-                        value={state.image}
+                        value={state.pImage}
                         onChange={handleChange}
-                        className="form-control" name="image" id="" aria-describedby="helpId" placeholder="" />
-                    {valImage.valI ? <small id="helpId" style={style} className="form-text">{valImage.errorI}</small> : null}
+                        className="form-control" name="pImage" id="" aria-describedby="helpId" placeholder="" />
+                    {valpImage.valI ? <small id="helpId" style={style} className="form-text">{valpImage.errorI}</small> : null}
 
                     <button name="" id="" className="btn btn-primary mt-1"  >AddProduct</button>
 

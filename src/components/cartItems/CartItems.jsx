@@ -57,7 +57,7 @@ export default function CartItems(props) {
 
                     return unique;
                 }
-                let arrF = getUnique(arr, 'productName')
+                let arrF = getUnique(arr, 'pName')
                 // console.log("******", arrF);
 
                 updateAfterF(arrF)
@@ -184,6 +184,8 @@ export default function CartItems(props) {
     }
 
     let billingfn = () => {
+        
+        localStorage.setItem("buyData",JSON.stringify(state.accounts))
 
         props.history.push('/billingpage')
 
@@ -205,8 +207,8 @@ export default function CartItems(props) {
                             return (
                                 <div className='ml-2 card'>
                                     <div className=' card-body'>
-                                        <h4>{value.productName}</h4>
-                                        <img src={value.image} className="mt-3 ml-2" style={imgStyle} alt="img"></img>
+                                        <h4>{value.pName}</h4>
+                                        <img src={value.pImage} className="mt-3 ml-2" style={imgStyle} alt="img"></img>
                                         <div className='text-primary'>{value.brand}</div>
                                         <div>price:{value.price}</div>
                                         <select className='mr-2'

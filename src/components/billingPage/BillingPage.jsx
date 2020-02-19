@@ -96,7 +96,10 @@ export default function BillingPage(props) {
   }
 
   let deleteCart = async () => {
-    uploadMyOrder()
+    // uploadMyOrder()
+   
+   
+   
     const url = `https://react-shopping-cart-fa82c.firebaseio.com/addcart/${idUser}/.json`
 
     try {
@@ -119,7 +122,7 @@ export default function BillingPage(props) {
       console.log(error);
 
     }
-
+ 
 
 
   }

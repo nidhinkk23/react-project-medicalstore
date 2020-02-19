@@ -10,33 +10,34 @@ export default function MaterialTableDemo(props) {
   let openData = {
     open: false,
     data: ""
+   
   }
   const [open, setOpen] = React.useState(openData);
   const [state, setState] = React.useState({
     columns: [
-      { title: 'ProductName', field: 'productName' },
-      { title: 'Brand', field: 'brand' },
+      { title: 'ProductName', field: 'pName' },
+      { title: 'Brand', field: 'company' },
       { title: 'Price', field: 'price' },
       { title: 'Quantity', field: 'quantity' },
-      { title: 'Image', field: 'image' },
+      { title: 'Image', field: 'pImage' },
 
     ],
     data: []
 
   });
-  let validation = (data) => {
+  let validation = (data,newAllData) => {
     console.log("in validation ", data);
-    const { productName, brand, price, quantity, image } = data
-    if (productName !== undefined || brand !== undefined || price !== undefined || quantity !== undefined || image !== undefined) {
-      if (productName.trim().length === 0 || brand.trim().length === 0 || price.trim().length === 0 || price.trim().match(/[a-z]/g) || quantity.trim().match(/[a-z]/g) || quantity.trim().length === 0 || image.trim().length === 0) {
+    const { pName, company, price, quantity, pImage } = data
+    console.log(pName,company,"price:-",price,quantity,pImage);
+    
+    if (pName !== undefined || company !== undefined || price !== undefined || quantity !== undefined || pImage !== undefined) {
+      if (pName.trim().length === 0 || company.trim().length === 0 || price.length === 0 ||   quantity.length === 0 || pImage.trim().length === 0) {
         console.log(" validation failed ");
-        setTimeout(() => {
-          setOpen({
-            open: true,
-            variant: "error",
-            data: "Invalid Data"
-          })
-        }, 2000);
+        setOpen({
+          open: true,
+          variant: "error",
+          data: "Invalid Data"
+        })
         setTimeout(() => {
           setOpen({
             ...open,
@@ -47,7 +48,7 @@ export default function MaterialTableDemo(props) {
         }, 2000);
 
       } else {
-        props.function(data)
+        props.editFunction(newAllData,data)
         console.log(" validation success  ");
         setOpen({
           open: true,
@@ -109,7 +110,7 @@ export default function MaterialTableDemo(props) {
 
                   const data = [...props.data];
                   data.push(newData);
-                  validation(newData)
+                  validation(newData,data)
                   // props.function(data)
                   return { ...prevState, data };
                 });
@@ -125,7 +126,7 @@ export default function MaterialTableDemo(props) {
                   setState(prevState => {
                     const data = [...props.data];
                     data[data.indexOf(oldData)] = newData;
-                    validation(newData)
+                    validation(newData,data)
                     return { ...prevState, data };
                   });
                 }
@@ -137,8 +138,8 @@ export default function MaterialTableDemo(props) {
                 resolve();
                 setState(prevState => {
                   const data = [...props.data];
-                  data.splice(data.indexOf(oldData), 1);
-                  props.function(data)
+                 const delData = data.splice(data.indexOf(oldData), 1);
+                  props.delFunction(data,delData)
 
                   return { ...prevState, data };
                 });

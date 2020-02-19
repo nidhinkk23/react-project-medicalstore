@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Axios from 'axios'
+import CustomizedTables from './UserUi'
 
 export default function UserDetails() {
 
@@ -35,17 +36,18 @@ export default function UserDetails() {
        const id = accToDelete.id
        console.log("id ", id);
 
-       const url = `https://react-shopping-cart-fa82c.firebaseio.com/account/` + id + `/.json`
+    //    const url = `https://react-shopping-cart-fa82c.firebaseio.com/account/` + id + `/.json`
 
 
        try {
-           const response = await Axios.delete(url)
-           console.log("response of delete ", response);
+        //    const response = await Axios.delete(url)
+        //    console.log("response of delete ", response);
 
            const myAccounts = [...state.accounts]
            const index = myAccounts.indexOf(accToDelete)
            myAccounts.splice(index, 1)
-           console.log("myAccounts ", myAccounts);
+           
+           console.log("myAccounts After splice ", myAccounts);
 
            setState({
                ...state,
@@ -70,7 +72,7 @@ export default function UserDetails() {
     return (
         <>
            
-                <table className="table">
+               {/*  <table className="table">
                    
                         <tr>
                             <th>FirstName</th>
@@ -98,8 +100,8 @@ export default function UserDetails() {
                    })}
                    
 
-                </table>
-           
+                </table> */}
+           <CustomizedTables deleteUser={deleteUser}  data={state.accounts} />
         </>
     )
 }

@@ -38,7 +38,7 @@ export default function NavBar() {
 
                         <ul className="navbar-nav ml-auto  mt-lg-0">
                              <li id="show-li" className="nav-item  ">
-                                <Link to='/showproduct' className="nav-link"><i class="fa fa-home" aria-hidden="true"></i>Home</Link>
+                                <Link to='/showproduct' className="nav-link"><i className="fa fa-home" aria-hidden="true"></i>Home</Link>
                             </li>
 
                             <li id="create-li" className="nav-item  ">
@@ -52,7 +52,7 @@ export default function NavBar() {
                         :
                         <ul className="navbar-nav ml-auto  mt-lg-0">
                              <li id="show-li" className="nav-item  ">
-                                <Link to='/showproduct' className="nav-link"><i class="fa fa-home" aria-hidden="true"></i>Home</Link>
+                                <Link to='/showproduct' className="nav-link"><i className="fa fa-home" aria-hidden="true"></i>Home</Link>
                             </li>
 
                             {role === "Admin" ? <>
@@ -61,7 +61,7 @@ export default function NavBar() {
                                 <Link to='/addproduct' className="nav-link"><i className="fas fa-plus-circle"></i>AddProduct</Link>
                             </li> 
                             <li id="create-li" className="nav-item  ">
-                                <Link to='/userdetails' className="nav-link"><i class="fa fa-users" aria-hidden="true"></i>UserDetails</Link>
+                                <Link to='/userdetails' className="nav-link"><i className="fa fa-users" aria-hidden="true"></i>UserDetails</Link>
                             </li> 
                             <li id="create-li" className="nav-item  ">
                                 <Link to='/productdetails' className="nav-link">Products</Link>
@@ -76,7 +76,7 @@ export default function NavBar() {
                             </li>
                            
                             <li id="show-li" className="nav-item  ">
-                                <Link to='/profile' className="nav-link"><i class="fas fa-user-circle"></i>Profile</Link>
+                                <Link to='/profile' className="nav-link"><i className="fas fa-user-circle"></i>Profile</Link>
                             </li>
                             <li id="show-li" className="nav-item  ">
                                 <Link to='/myorder' className="nav-link">MyOrder</Link>
@@ -84,7 +84,7 @@ export default function NavBar() {
                             <li id="create-li" className="nav-item  ">
                                 <Link onClick={()=>{
                                     context.setLogin(false)
-                                }} to='/login' className="nav-link"><i class="fas fa-sign-out-alt"></i>Logout</Link>
+                                }} to='/login' className="nav-link"><i className="fas fa-sign-out-alt"></i>Logout</Link>
 
                             </li>
                         </ul>

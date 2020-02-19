@@ -113,6 +113,7 @@ MySnackbarContentWrapper.propTypes = {
 
 export default function CustomizedSnackbars(props) {
  console.log("props.open.variant",props.open.variant);
+ console.log("props.open.open",props.open.open);
  
 
   return (

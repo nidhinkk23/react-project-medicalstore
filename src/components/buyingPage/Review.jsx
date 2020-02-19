@@ -28,8 +28,15 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Review(props) {
+
+
+
   const classes = useStyles();
-  console.log(props.bData);
+  console.log("context ", props.bData);
+  let buyData = JSON.parse(localStorage.getItem("buyData"))
+
+  console.log("buyData ", buyData);
+  let sum = 0
   let data = props.bData
   return (
     <React.Fragment>
@@ -37,20 +44,31 @@ export default function Review(props) {
         Order summary
       </Typography>
       <List disablePadding>
-       
-          <ListItem className={classes.listItem} >
-            <ListItemText primary={data.productName}  />
-            <Typography variant="body2">{data.price}</Typography>
-          </ListItem>
-       
+
+        {buyData.map((value) => {
+          sum = sum + value.price
+          return <>
+            < ListItem className={classes.listItem} >
+
+              <ListItemText primary={value.pName} />
+
+              <Typography variant="body2">{value.price}</Typography>
+
+            </ListItem>
+          </>
+        })}
+
         <ListItem className={classes.listItem}>
+
+
           <ListItemText primary="Total" />
           <Typography variant="subtitle1" className={classes.total}>
-            $34.06
-            
+            {sum}
+
           </Typography>
         </ListItem>
       </List>
+
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
@@ -77,6 +95,6 @@ export default function Review(props) {
           </Grid>
         </Grid>
       </Grid>
-    </React.Fragment>
+    </React.Fragment >
   );
 }

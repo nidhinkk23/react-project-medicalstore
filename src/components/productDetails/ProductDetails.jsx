@@ -3,38 +3,37 @@ import Axios from 'axios'
 import { Modal } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import MaterialTableDemo from '../productDetails/ProductMaterial'
+import CustomizedTables from '../productDetails/ProductUi'
 
 export default class View extends Component {
 
     state = {
         account: [],
         show: false,
-        productName: "",
-        brand: "",
-        price: "",
-        quantity: "",
-        image: ""
+
 
     }
     componentDidMount() {
         this.getAllAccount()
     }
     getAllAccount = () => {
-        const url = 'https://react-shopping-cart-fa82c.firebaseio.com/addproduct.json'
-        Axios.get(url).then(response => {
-            console.log("Response", response.data);
+        console.log("url");
 
-            let newData = []
-            for (const key in response.data) {
-                console.log(response.data[key]);
-                newData.push({
-                    ...response.data[key],
-                    id: key
-                })
+        const url = "http://localhost:8080/showproducts"
+
+        Axios.get(url).then(response => {
+            console.log("Response", response.data.products);
+
+            let newData = response.data.products
+            let arr = []
+            for (const iterator of newData) {
+                iterator.edit = false
+                console.log("for of ", iterator);
+                arr.push(iterator)
             }
-            console.log(newData);
             this.setState({
-                account: newData
+                account: arr,
+
             })
 
         }).catch(error => {
@@ -82,10 +81,10 @@ export default class View extends Component {
     }
     saveData = async () => {
         console.log("State Data", this.state);
-        
-        const { productName, brand, price, quantity,image, id } = this.state
+
+        const { productName, brand, price, quantity, image, id } = this.state
         const accToUpdate = {
-            productName, brand, price, quantity,image
+            productName, brand, price, quantity, image
         }
         console.log(accToUpdate);
 
@@ -98,7 +97,7 @@ export default class View extends Component {
                 console.log(this.state.account);
                 console.log(accToUpdate);
                 const items = [...this.state.account];
-                console.log("items",items);
+                console.log("items", items);
                 // for(let i in items){
                 //     if (items[i]===this.state.id) {
                 //         items[i].userName=userName
@@ -109,18 +108,18 @@ export default class View extends Component {
 
                 //     }
                 // }
-               
+
                 items.map(item => {
                     if (item.id === id) {
-                        
-                        item.productName=accToUpdate.productName
-                        item.brand=accToUpdate.brand
-                        item.price=accToUpdate.price
-                        item.quantity=accToUpdate.quantity
-                        item.image=accToUpdate.image
-                        item.id=accToUpdate.id
-                        
-                        return item ;
+
+                        item.productName = accToUpdate.productName
+                        item.brand = accToUpdate.brand
+                        item.price = accToUpdate.price
+                        item.quantity = accToUpdate.quantity
+                        item.image = accToUpdate.image
+                        item.id = accToUpdate.id
+
+                        return item;
                     } return null
                 })
                 console.log(items);
@@ -130,7 +129,7 @@ export default class View extends Component {
                     show: false,
                 })
 
-                
+
             }
 
         } catch (error) {
@@ -139,24 +138,61 @@ export default class View extends Component {
 
 
     }
-    function = (data)=>{
-      
-       console.log("newData ",data);
-       this.setState({
-        account:data
-       
-    })
-    }
-    validation = (data)=>{
-        console.log("validation ",data);
+
+    editFunction = async (oldData,data) => {
         
+        console.log("Edited data  in prduct Details  ", oldData);
+        this.setState({
+            account:oldData
+        })
+        /*  let newData = { ...oldData }
+        newData.edit = true
+        let data = this.state.account
+        data[data.indexOf(oldData)] = newData;
+       
+        this.setState({
+            account:data
+        }) */
+
+
+        /*  console.log("newData in prduct Details  ",newData);
+           this.setState({
+           account:newData
+          
+       })  */
+
+        const url = "http://localhost:8080/editproduct"
+         const response = await Axios.post(url,data)
+         console.log("response after edit ",response);
+        
+    }
+
+    delFunction = async (data) => {
+        
+        console.log("del data ", data);
+        this.setState({
+            account: data
+
+        })
+
+        /* let accountCopy = [...this.state.account]
+        console.log(accountCopy);
+        let index = accountCopy.indexOf(data)
+        accountCopy.splice(index, 1)
+        this.setState({
+            account: accountCopy
+
+        }) */
+
+        // const url = "http://localhost:8080/deleteproduct"
+        // const response = await Axios.post(url,data[0])
+        // console.log("response after delete ",response);
 
     }
-   
     render() {
         return (
-            <div className="container mt-3 mt-5">
-               {/*  <table className="table table-bordered table-hover  table-striped">
+            <>
+                {/*  <table className="table table-bordered table-hover  table-striped">
                     <thead className="thead-dark">
                         <tr>
                            
@@ -254,8 +290,9 @@ export default class View extends Component {
                      </Button>
                     </Modal.Footer>
                 </Modal> */}
-                <MaterialTableDemo function={this.function} validation={this.validation} data={this.state.account}/>
-            </div>
+                <MaterialTableDemo delFunction = {this.delFunction} editFunction={this.editFunction} validation={this.validation} data={this.state.account}/>
+                {/* <CustomizedTables data={this.state.account} delFunction={this.delFunction} editFunction={this.editFunction} /> */}
+            </>
         )
     }
 }
